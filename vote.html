@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Puntland Election</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center"><b>Puntland Election</b></h1>
+        <form id="add-candidate-form" class="mt-4">
+            <div class="form-group">
+                <label for="candidate-name">Magaca Musharaxa:</label>
+                <input type="text" id="candidate-name" name="candidate-name" class="form-control">
+            </div>
+            <input type="submit" value="Kudar Musharax Cusub" class="btn btn-primary">
+        </form>
+        <div id="candidates" class="mt-4">
+            <!-- Candidates will be added here -->
+        </div>
+        <button id="reset-button" class="btn btn-danger mt-4">Reset All</button>
+    </div>
+
+    <footer class="text-center mt-5">
+        <p>© 2024 Eng Younis said gooni</p>
+    </footer>
+
+    <script>
+        document.getElementById('add-candidate-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var candidateName = event.target.elements['candidate-name'].value;
+            var candidateDiv = document.createElement('div');
+            candidateDiv.className = 'candidate my-2 p-2 border';
+            candidateDiv.innerHTML = '<span>' + candidateName + '</span><button class="plus-button btn btn-success ml-2">+</button><button class="minus-button btn btn-warning ml-2">-</button><span class="vote-count ml-2">0</span><button class="delete-button btn btn-danger ml-2">Delete</button><button class="reset-button btn btn-info ml-2">Reset</button>';
+            document.getElementById('candidates').appendChild(candidateDiv);
+        });
+
+        document.getElementById('reset-button').addEventListener('click', function() {
+            var candidatesDiv = document.getElementById('candidates');
+            while (candidatesDiv.firstChild) {
+                candidatesDiv.removeChild(candidatesDiv.firstChild);
+            }
+        });
+
+        document.getElementById('candidates').addEventListener('click', function(event) {
+            var voteCount = event.target.parentNode.getElementsByClassName('vote-count')[0];
+            if (event.target.className === 'plus-button btn btn-success ml-2') {
+                voteCount.textContent = parseInt(voteCount.textContent) + 1;
+            } else if (event.target.className === 'minus-button btn btn-warning ml-2') {
+                voteCount.textContent = parseInt(voteCount.textContent) - 1;
+            } else if (event.target.className === 'delete-button btn btn-danger ml-2') {
+                event.target.parentNode.remove();
+            } else if (event.target.className === 'reset-button btn btn-info ml-2') {
+                voteCount.textContent = '0';
+            }
+        });
+    </script>
+</body>
+</html>
